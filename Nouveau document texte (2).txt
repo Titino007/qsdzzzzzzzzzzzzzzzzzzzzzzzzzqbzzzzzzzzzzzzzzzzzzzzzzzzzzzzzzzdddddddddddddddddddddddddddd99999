@@ -1,0 +1,344 @@
+--https://web.roblox.com/games/12289293395/ANIME-Boxing-Fighters-Simulator#!/about
+
+
+
+
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+local Window = Rayfield:CreateWindow({
+   Name = "Project Kitten  v0.0.0.0",
+   LoadingTitle = "Jehno#4316",
+   LoadingSubtitle = "Loading Script Pls wait...",
+   ConfigurationSaving = {
+      Enabled = false,
+      FolderName = nil, -- Create a custom folder for your hub/game
+      FileName = "Big Hub"
+   },
+   Discord = {
+      Enabled = true,
+      Invite = "EV9SkQ3bPx", -- The Discord invite code, do not include discord.gg/. E.g. discord.gg/ABCD would be ABCD
+      RememberJoins = false -- Set this to false to make them join the discord every time they load it up
+   },
+   KeySystem = false, -- Set this to true to use our key system
+   KeySettings = {
+      Title = "Untitled",
+      Subtitle = "Key System",
+      Note = "No method of obtaining the key is provided",
+      FileName = "Key", -- It is recommended to use something unique as other scripts using Rayfield may overwrite your key file
+      SaveKey = true, -- The user's key will be saved, but if you change the key, they will be unable to use your script
+      GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+      Key = {"Hello"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
+   }
+})
+
+
+
+
+
+
+
+
+
+local Tab = Window:CreateTab("Main", 4483362458) -- Title, Image
+
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local PunchEvent = ReplicatedStorage.Network.Punch
+
+local isPunching = false -- Variable to keep track of whether we're currently punching
+
+local Toggle = Tab:CreateToggle({
+    Name = "Auto Train",
+    CurrentValue = false,
+    Flag = "Toggle1",
+    Callback = function(Value)
+        if Value then
+            if not isPunching then
+                isPunching = true
+                while isPunching do
+                    PunchEvent:FireServer()
+                    wait(0.000000000000000000000000000000000000001)
+                end
+            end
+        else
+            isPunching = false
+        end
+    end,
+})
+
+local Coins = {
+    game:GetService("Workspace").Interaction.TweeningCoins,
+    game:GetService("Workspace").Interaction.Gems,
+    game:GetService("Workspace").Interaction.BrickCoins,
+    game:GetService("Workspace").Interaction.Coins,
+    game:GetService("Workspace").Interaction.AnimeCoins
+}
+
+local function TeleportCoinsToPlayer()
+    while true do
+        for _, CoinType in ipairs(Coins) do
+            local Coins = CoinType:GetChildren()
+            for i = 1, #Coins do
+                local Coin = Coins[i]
+                Coin.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+            end
+        end
+        wait(0.000000000000000000000000000000000000001) -- Change this value to adjust the frequency of teleportation
+    end
+end
+
+local Toggle = Tab:CreateToggle({
+    Name = "Auto Collect Orbs",
+    CurrentValue = false,
+    Flag = "Toggle1",
+    Callback = function(Value)
+        if Value then
+            TeleportCoinsToPlayer()
+        else
+            -- stop the TeleportCoinsToPlayer function
+            game:GetService("RunService").Heartbeat:Wait() -- wait for the current loop iteration to finish
+            return
+        end
+    end
+})
+
+local Section = Tab:CreateSection("AutoBuy Upgrade")
+
+local toggleValue = false
+local loopRunning = false
+
+local function BuyUpgradeLoop()
+    while true do
+        if toggleValue then
+            local args = {
+                [1] = "Coins",
+                [2] = "Woodlands"
+            }
+            game:GetService("ReplicatedStorage").Network.BuyUpgrade:FireServer(unpack(args))
+        end
+        wait(1) -- Change this value to adjust the frequency of the loop
+    end
+end
+
+local function startLoop()
+    loopRunning = true
+    BuyUpgradeLoop()
+end
+
+local function stopLoop()
+    loopRunning = false
+end
+
+local Toggle = Tab:CreateToggle({
+    Name = "AutoBuy CoinUpgrade",
+    CurrentValue = false,
+    Flag = "Toggle1",
+    Callback = function(Value)
+        if Value then
+            toggleValue = true
+            if not loopRunning then
+                startLoop()
+            end
+        else
+            toggleValue = false
+            if loopRunning then
+                stopLoop()
+            end
+        end
+    end,
+})
+
+local toggleValue = false
+local loopRunning = false
+
+local function BuyUpgradeLoop()
+    while true do
+        if toggleValue then
+            local args = {
+                [1] = "Strength",
+                [2] = "Woodlands"
+            }
+            game:GetService("ReplicatedStorage").Network.BuyUpgrade:FireServer(unpack(args))
+        end
+        wait(1) -- Change this value to adjust the frequency of the loop
+    end
+end
+
+local function startLoop()
+    loopRunning = true
+    BuyUpgradeLoop()
+end
+
+local function stopLoop()
+    loopRunning = false
+end
+
+local Toggle = Tab:CreateToggle({
+    Name = "AutoBuy StrengthUpgrade",
+    CurrentValue = false,
+    Flag = "Toggle1",
+    Callback = function(Value)
+        if Value then
+            toggleValue = true
+            if not loopRunning then
+                startLoop()
+            end
+        else
+            toggleValue = false
+            if loopRunning then
+                stopLoop()
+            end
+        end
+    end,
+})
+
+local toggleValue = false
+local loopRunning = false
+
+local function BuyUpgradeLoop()
+    while true do
+        if toggleValue then
+            local args = {
+                [1] = "Critical Chance",
+                [2] = "Woodlands"
+            }
+            game:GetService("ReplicatedStorage").Network.BuyUpgrade:FireServer(unpack(args))
+        end
+        wait(1) -- Change this value to adjust the frequency of the loop
+    end
+end
+
+local function startLoop()
+    loopRunning = true
+    BuyUpgradeLoop()
+end
+
+local function stopLoop()
+    loopRunning = false
+end
+
+local Toggle = Tab:CreateToggle({
+    Name = "AutoBuy Critical ChanceUpgrade",
+    CurrentValue = false,
+    Flag = "Toggle1",
+    Callback = function(Value)
+        if Value then
+            toggleValue = true
+            if not loopRunning then
+                startLoop()
+            end
+        else
+            toggleValue = false
+            if loopRunning then
+                stopLoop()
+            end
+        end
+    end,
+})
+
+local toggleValue = false
+local loopRunning = false
+
+local function BuyUpgradeLoop()
+    while true do
+        if toggleValue then
+            local args = {
+                [1] = "Walkspeed",
+                [2] = "Woodlands"
+            }
+            game:GetService("ReplicatedStorage").Network.BuyUpgrade:FireServer(unpack(args))
+        end
+        wait(1) -- Change this value to adjust the frequency of the loop
+    end
+end
+
+local function startLoop()
+    loopRunning = true
+    BuyUpgradeLoop()
+end
+
+local function stopLoop()
+    loopRunning = false
+end
+
+local Toggle = Tab:CreateToggle({
+    Name = "AutoBuy WalkspeedUpgrade",
+    CurrentValue = false,
+    Flag = "Toggle1",
+    Callback = function(Value)
+        if Value then
+            toggleValue = true
+            if not loopRunning then
+                startLoop()
+            end
+        else
+            toggleValue = false
+            if loopRunning then
+                stopLoop()
+            end
+        end
+    end,
+})
+
+
+local Tab = Window:CreateTab("Egg", 4483362458) -- Title, Image
+
+local Toggle = Tab:CreateToggle({
+    Name = "Auto EquipBestPets",
+    CurrentValue = false,
+    Flag = "Toggle1",
+    Callback = function(Value)
+        if Value then
+            while Toggle.CurrentValue do
+                game:GetService("ReplicatedStorage").Network.EquipBestPets:FireServer()
+                wait(0.000000000000000000000000000000000000001)
+            end
+        end
+    end
+})
+
+local Section = Tab:CreateSection("Auto Hatch")
+
+local Toggle
+Toggle = Tab:CreateToggle({
+   Name = "Auto Hatch Single",
+   CurrentValue = false,
+   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+   -- The function that takes place when the toggle is pressed
+   -- The variable (Value) is a boolean on whether the toggle is true or false
+       if Value then
+           while Toggle.CurrentValue do
+               local args = {
+                   [1] = "1",
+                   [2] = "Single"
+               }
+               game:GetService("ReplicatedStorage").Network.OpenEgg:InvokeServer(unpack(args))
+               wait(0.000000000000000000000000000000000000001) -- Change this value to adjust the frequency of execution
+           end
+       end
+   end,
+})
+
+
+
+local Toggle
+Toggle = Tab:CreateToggle({
+   Name = "Auto Hatch Triple",
+   CurrentValue = false,
+   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+   -- The function that takes place when the toggle is pressed
+   -- The variable (Value) is a boolean on whether the toggle is true or false
+       if Value then
+           while Toggle.CurrentValue do
+               local args = {
+                   [1] = "1",
+                   [2] = "Triple"
+               }
+               game:GetService("ReplicatedStorage").Network.OpenEgg:InvokeServer(unpack(args))
+               wait(0.000000000000000000000000000000000000001) -- Change this value to adjust the frequency of execution
+           end
+       end
+   end,
+})
